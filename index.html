@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Image Preview With Zoom Effect</title>
+<script type="text/javascript" src="js/jquery-1.4.min.js"></script>
+<script type="text/javascript" language="javascript">
+	$(document).ready(function() {			
+		var oldWidth = $("#thumbnail img").width();		
+		$("#thumbnail img").hover(function(){
+			var src = $(this).attr("src");
+			$(this).attr("src",$(this).attr("alt"));
+			$(this).animate({width: "30%"},1000);
+			$(this).attr("alt",src);
+		}, function(){
+			$(this).animate({width: oldWidth},1000);
+			var src = $(this).attr("src");
+			$(this).queue(function(){
+				$(this).attr("src",$(this).attr("alt"));
+				$(this).attr("alt",src);
+				$(this).dequeue();
+			});			
+		});
+	});
+</script>
+<style>
+img {
+	border: none;
+}
+#thumbnail img {
+	cursor: pointer;
+	width: 100px;	
+	padding: 2px;
+	float: left;
+}
+#large {
+	display: none;
+	position: absolute;	
+	color: #FFFFFF;
+	background: #333333;	
+	padding: 5px;
+}
+</style>
+</head>
+<body>
+<div id="thumbnail">
+		<h3>Hover over the image</h3>
+	    <img src="images/thumbnails/hills-thumb.jpg" alt="images/hills.jpg" rel="Hills Image" />
+		<img src="images/thumbnails/lilies-thumb.jpg" alt="images/lilies.jpg" rel="Lilies Image" />
+		<img src="images/thumbnails/sunset-thumb.jpg" alt="images/sunset.jpg" rel="Sunset Image" />
+		<img src="images/thumbnails/winter-thumb.jpg" alt="images/winter.jpg" rel="Winter Image" />
+		<p id="large"></p>
+   </div>
+</body>
+</html>
